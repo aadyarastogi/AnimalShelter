@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4A55A2;
+            --success-color: #22C55E;
+            --warning-color: #F59E0B;
+            --light-gray: #F1F5F9;
+            --medium-gray: #CBD5E1;
+            --dark-gray: #334155;
+            --white: #FFFFFF;
+        }
+    
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar-brand i { font-size: 1.3rem; }
+
+        .navbar-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #64748B;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-links a:hover, .navbar-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .navbar-links a.active { font-weight: 600; }
+
+        .navbar-logout {
+            padding: 0.6rem 1rem;
+            background-color: #FEE2E2;
+            color: #DC2626;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-logout:hover {
+            background-color: #DC2626;
+            color: var(--white);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .header h1 { margin: 0; font-size: 2.2rem; font-weight: 600; }
+        .header i { font-size: 2rem; color: #F59E0B; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        
+        .stat-card .icon {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+        }
+        
+        .stat-card.hours .icon { background-color: #E0E7FF; color: #4338CA; }
+        .stat-card.completed .icon { background-color: #D1FAE5; color: #047857; }
+        .stat-card.pending .icon { background-color: #FEF3C7; color: #B45309; }
+
+        .stat-card .info h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+            color: #64748B;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .stat-card .info p {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .card-header h2 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+
+        .task-table { width: 100%; border-collapse: collapse; }
+        .task-table th, .task-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .task-table th {
+            background-color: #F8FAFC;
+            font-weight: 600;
+            color: #64748B;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .task-table tbody tr:last-child td { border-bottom: none; }
+        .task-table tbody tr:hover { background-color: #F8FAFC; }
+
+        .status-pill {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pill.pending { background-color: #FEF3C7; color: #B45309; }
+        .status-pill.completed { background-color: #D1FAE5; color: #047857; }
+        
+        .btn-action {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--success-color);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-action:hover { background-color: #16A34A; }
+        .btn-action.disabled {
+            background-color: var(--medium-gray);
+            color: #64748B;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            Volunteer
+        </div>
+        <div class="navbar-links">
+            <a href="/volunteer_dashboard.html" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="/volunteer_profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+        </div>
+        <a href="/" class="navbar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </nav>
+
+    <div class="container">
+        
+        <header class="header">
+            <i class="fa-solid fa-hand-sparkles"></i>
+            <h1 id="volunteer-name">Welcome back, [Volunteer Name]!</h1>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card hours">
+                <div class="icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="info">
+                    <h3>Total Hours</h3>
+                    <p id="stat-total-hours">0</p>
+                </div>
+            </div>
+            <div class="stat-card completed">
+                <div class="icon"><i class="fa-solid fa-check-circle"></i></div>
+                <div class="info">
+                    <h3>Tasks Completed</h3>
+                    <p id="stat-tasks-completed">0</p>
+                </div>
+            </div>
+            <div class="stat-card pending">
+                <div class="icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="info">
+                    <h3>Pending Tasks</h3>
+                    <p id="stat-tasks-pending">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Your Upcoming Tasks</h2>
+            </div>
+            
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Task</th>
+                        <th>Animal</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="volunteer_dashboard.js"></script>
+
+</body>
+</html>

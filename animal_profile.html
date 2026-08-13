@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - Animal Profile</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* This CSS is copied from your other staff pages for consistency */
+        :root {
+            --primary-color: #4A55A2;
+            --success-color: #22C55E;
+            --warning-color: #F59E0B;
+            --light-gray: #F1F5F9;
+            --medium-gray: #CBD5E1;
+            --dark-gray: #334155;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            color: var(--dark-gray);
+        }
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .navbar-links a {
+            text-decoration: none;
+            color: #64748B;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .navbar-links a:hover {
+            color: var(--primary-color);
+        }
+        .navbar-links a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .navbar-logout {
+            padding: 0.6rem 1rem;
+            background-color: #FEE2E2;
+            color: #DC2626;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header h2 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Profile Header */
+        .profile-header {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .profile-header i {
+            font-size: 4rem;
+            color: var(--primary-color);
+        }
+        .profile-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .profile-header p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #64748B;
+        }
+        
+        /* Profile Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        .detail-item {
+            background-color: #F8FAFC;
+            border: 1px solid var(--light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .detail-item label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748B;
+            display: block;
+        }
+        .detail-item p {
+            font-size: 1.1rem;
+            margin: 0.25rem 0 0 0;
+        }
+        
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .data-table th {
+            background-color: #F8FAFC;
+            font-weight: 600;
+            color: #64748B;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fa-solid fa-clipboard-user"></i>
+            Staff
+        </div>
+        <div class="navbar-links">
+            <a href="/staff_dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="/staff_animals.html" class="active"><i class="fa-solid fa-paw"></i> Animals</a>
+            <a href="/staff_adoptions.html"><i class="fa-solid fa-heart"></i> Adoptions</a>
+            <a href="/staff_donations.html"><i class="fa-solid fa-gift"></i> Donations</a>
+            <a href="/staff_health.html"><i class="fa-solid fa-file-medical"></i> Health Records</a>
+        </div>
+        <a href="/" class="navbar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </nav>
+
+    <div class="container">
+        
+        <div class="card">
+            <div class="profile-header">
+                <i class="fa-solid fa-paw"></i>
+                <div>
+                    <h1 id="animal-name">[Loading...]</h1>
+                    <p id="animal-species-breed">[Species & Breed]</p>
+                </div>
+            </div>
+            
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Animal ID</label>
+                    <p id="animal-id">--</p>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <p id="animal-status">--</p>
+                </div>
+                <div class="detail-item">
+                    <label>Date of Birth</label>
+                    <p id="animal-dob">--</p>
+                </div>
+                <div class="detail-item">
+                    <label>Breed</label>
+                    <p id="animal-breed">--</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>Health Records</h2>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Checkup Date</th>
+                        <th>Weight</th>
+                        <th>Diagnosis</th>
+                        <th>Medication</th>
+                        <th>Next Visit</th>
+                    </tr>
+                </thead>
+                <tbody id="health-table-body">
+                    </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>Treatments</h2>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date Given</th>
+                        <th>Treatment Type</th>
+                        <th>Administered By (Staff)</th>
+                        <th>Veterinarian</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="treatment-table-body">
+                    </tbody>
+            </table>
+        </div>
+        
+    </div>
+    
+    <script src="animal_profile.js"></script>
+
+</body>
+</html>

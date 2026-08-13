@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* All CSS is identical to staff_dashboard.html */
+        :root {
+            --primary-color: #4A55A2;
+            --secondary-color: #64748B;
+            --light-gray: #F1F5F9;
+            --dark-gray: #334155;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            color: var(--dark-gray);
+        }
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .navbar-links a {
+            text-decoration: none;
+            color: #64748B;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .navbar-links a:hover {
+            color: var(--primary-color);
+        }
+        .navbar-links a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .navbar-logout {
+            padding: 0.6rem 1rem;
+            background-color: #FEE2E2;
+            color: #DC2626;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-logout:hover {
+            background-color: #DC2626;
+            color: var(--white);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem;
+        }
+        .stat-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: #64748B;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stat-card p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin: 0.5rem 0 0 0;
+        }
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: #3b468a;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .data-table th {
+            background-color: #F8FAFC;
+            font-weight: 600;
+            color: #64748B;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .data-table tbody tr:hover {
+            background-color: #F8FAFC;
+        }
+        .status-pill {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-pill.treatment { background-color: #FEF3C7; color: #B45309; }
+        .btn-action-link {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-action-link:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fa-solid fa-clipboard-user"></i>
+            Staff
+        </div>
+        <div class="navbar-links">
+            <a href="/staff_dashboard.html" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="/staff_animals.html"><i class="fa-solid fa-paw"></i> Animals</a>
+            <a href="/staff_adoptions.html"><i class="fa-solid fa-heart"></i> Adoptions</a>
+            <a href="/staff_donations.html"><i class="fa-solid fa-gift"></i> Donations</a>
+            <a href="/staff_health.html"><i class="fa-solid fa-file-medical"></i> Health Records</a>
+        </div>
+        <a href="/" class="navbar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </nav>
+
+    <div class="container">
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-paw"></i> Animals On-site</h3>
+                <p id="stat-animals-onsite">0</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-file-signature"></i> Pending Adoptions</h3>
+                <p id="stat-pending-adoptions">0</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-stethoscope"></i> Checkups Today</h3>
+                <p id="stat-checkups-today">0</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-users"></i> Volunteers Today</h3>
+                <p id="stat-volunteers-today">0</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Animals Needing Attention</h2>
+                <a href="/staff_animals.html" class="btn btn-primary">
+                    <i class="fa-solid fa-paw"></i> View All Animals
+                </a>
+            </div>
+            
+            <table class="data-table" id="needs-attention-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>Recent Adoptions</h2>
+                <a href="/add_adoption.html" class="btn btn-secondary">
+                    <i class="fa-solid fa-pen-to-square"></i> Process Adoption
+                </a>
+            </div>
+            
+            <table class="data-table" id="recent-adoptions-table">
+                <thead>
+                    <tr>
+                        <th>AdoptionID</th>
+                        <th>Animal Name</th>
+                        <th>Adopter Name</th>
+                        <th>Adoption Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+    
+    <script src="staff_dashboard.js"></script>
+
+</body>
+</html>
